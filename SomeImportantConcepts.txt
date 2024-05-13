@@ -1,0 +1,29 @@
+In a multi-core system, each core typically has its own cache. These caches are often referred to as **L1 (Level 1) caches**. When multiple threads are accessing shared data, the behavior depends on the cache coherence protocol used by the system. Let's explore the scenarios:
+
+1. **Private Caches (Per-Core)**:
+    - Each core has its own private cache (L1 cache).
+    - When a thread accesses shared data, it reads or writes from its own cache.
+    - If another thread on a different core modifies the same shared data, the cache coherence protocol ensures that the other core's cache is updated.
+    - This approach minimizes contention and provides good performance.
+
+2. **Shared Caches (L2 or L3)**:
+    - Some multi-core systems have shared caches (e.g., L2 or L3 caches) that are accessible by all cores.
+    - In this case, multiple cores share the same cache.
+    - When a thread accesses shared data, it may read or write from the shared cache.
+    - The cache coherence protocol ensures that all cores see consistent values for shared data.
+    - However, accessing shared caches can introduce contention and affect performance.
+
+3. **Cache Coherence Protocols**:
+    - Common cache coherence protocols include **MESI (Modified, Exclusive, Shared, Invalid)** and **MOESI (Modified, Owned, Exclusive, Shared, Invalid)**.
+    - These protocols manage cache states (e.g., modified, shared, invalid) to maintain consistency.
+    - For example, if one core modifies shared data, it transitions its cache line to the "Modified" state, and other cores invalidate their copies.
+
+4. **False Sharing**:
+    - Even with private caches, there's a concept called **false sharing**.
+    - False sharing occurs when two threads modify different variables that happen to reside in the same cache line.
+    - This can lead to unnecessary cache invalidations and performance degradation.
+    - To mitigate false sharing, align shared data structures properly.
+
+In summary, whether different caches are used or the same cache is used depends on the system architecture (private vs. shared caches) and the cache coherence protocol. In most cases, private per-core caches are used, but shared caches can also exist. Understanding cache behavior is crucial for optimizing multi-threaded applications. 😊
+
+If you'd like more details or have further questions, feel free to ask! 🚀
